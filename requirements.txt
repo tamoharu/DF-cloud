@@ -1,0 +1,9 @@
+filetype==1.2.0
+numpy==1.26.4
+onnx==1.15.0
+onnxruntime==1.16.3
+opencv_python==4.8.1.78
+protobuf==5.28.3
+psutil==5.9.6
+python-dotenv==1.0.1
+tqdm==4.66.1

@@ -1,0 +1,9 @@
+PJ_NAME = 'df_inference'
+VIDEO_FPS = 30
+FRAME_DIR = '/frames'
+CROP_FRAME_DIR = '/crop_frames'
+MASK_DIR = '/masks'
+MATRIX_DIR = '/matrices'
+TEMP_FRAME_EXTENSION = 'jpg'
+TEMP_MASK_EXTENSION = 'npy'
+TEMP_MATRIX_EXTENSION = 'npy'
