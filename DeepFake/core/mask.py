@@ -3,14 +3,14 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 
-import config.type as type
-import config.globals as globals
+import DeepFake.config.type as type
+import DeepFake.config.globals as globals
 import DeepFake.utils.filesystem as filesystem
 import DeepFake.utils.swap_util as swap_util
 import DeepFake.utils.ffmpeg as ffmpeg
 import DeepFake.utils.vision as vision
-import DeepFake.model_zoo.face_occluder as masker
 import DeepFake.utils.multi_process as multi_process
+import DeepFake.core.model_zoo.face_occluder as masker
 
 
 def run(video_path: str, output_path: str):
@@ -23,7 +23,7 @@ def run(video_path: str, output_path: str):
     multi_process.run(process_frames, frame_paths, output_path)
     
 
-def process_frames(frame_paths: str, output_path: str, update_progress: type.UpdateProcess) -> None:
+def process_frames(frame_paths: List[str], output_path: str, update_progress: type.UpdateProcess) -> None:
     for frame_path in frame_paths:
         frame = vision.read_static_image(frame_path)
         mask_list, crop_frame_list, affine_matrix_list = mask_target(frame)

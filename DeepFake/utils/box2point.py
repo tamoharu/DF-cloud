@@ -2,8 +2,8 @@ from typing import Tuple
 
 import numpy as np
 
-import config.type as type
-import config.words as words
+import DeepFake.config.type as type
+import DeepFake.config.words as words
 import DeepFake.utils.log as log
 
 

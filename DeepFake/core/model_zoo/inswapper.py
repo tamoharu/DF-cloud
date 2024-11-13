@@ -1,7 +1,7 @@
 import numpy as np
 import onnx
 
-import config.type as type
+import DeepFake.config.type as type
 import DeepFake.utils.filesystem as filesystem
 import DeepFake.utils.inference as inference
 

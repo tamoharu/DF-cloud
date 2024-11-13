@@ -18,7 +18,11 @@ def install_requirements():
     print("Installing packages from requirements.txt...")
     pip_executable = os.path.join(venv_dir, "bin", "pip") if os.name != "nt" else os.path.join(venv_dir, "Scripts", "pip.exe")
     subprocess.check_call([pip_executable, "install", "-r", "requirements.txt"])
-    subprocess.check_call([pip_executable, "install", "onnxruntime-gpu"])
+    import torch
+    if torch.cuda.is_available():
+        subprocess.check_call([pip_executable, "install", "onnxruntime-gpu"])
+    else:
+        subprocess.check_call([pip_executable, "install", "onnxruntime"])
     print("Packages installed")
 
 
@@ -43,8 +47,8 @@ def download_and_extract(url, extract_to):
 
 
 def download_datasets():
-    extract_to = './models/'
-    url = 'https://github.com/tamoharu/DF-scripts/releases/download/models/model.zip'
+    extract_to = './DeepFake/models/'
+    url = 'https://github.com/tamoharu/DF-cloud/releases/download/model/model.zip'
     download_and_extract(url, extract_to)
 
 

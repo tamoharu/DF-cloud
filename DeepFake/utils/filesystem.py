@@ -8,7 +8,7 @@ import inspect
 
 import filetype
 
-import config.globals as globals
+import DeepFake.config.globals as globals
 
 
 TEMP_DIRECTORY_PATH = os.path.join(tempfile.gettempdir(), globals.PJ_NAME)
@@ -126,8 +126,8 @@ def is_video(video_path : str) -> bool:
 
 
 def resolve_relative_path(path: str) -> str:
-    caller_frame = inspect.currentframe().f_back
-    caller_path = caller_frame.f_code.co_filename
+    caller_frame = inspect.currentframe().f_back # type: ignore
+    caller_path = caller_frame.f_code.co_filename # type: ignore
     caller_dir = os.path.dirname(os.path.abspath(caller_path))
     return os.path.abspath(os.path.join(caller_dir, path))
 

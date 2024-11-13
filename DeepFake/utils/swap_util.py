@@ -3,9 +3,9 @@ from typing import Tuple, List
 import cv2
 import numpy as np
 
-import config.type as type
-import DeepFake.model_zoo.yolox as detector
-import DeepFake.model_zoo.inswapper as swapper
+import DeepFake.config.type as type
+import DeepFake.core.model_zoo.yolox as detector
+import DeepFake.core.model_zoo.inswapper as swapper
 
 
 def warp_face(temp_frame: type.Frame, kps: type.Kps, model_template: type.Template, model_size: type.Size) -> Tuple[type.Frame, type.Matrix]:

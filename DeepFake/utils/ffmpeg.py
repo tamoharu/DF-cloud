@@ -1,7 +1,7 @@
 from typing import List
 import subprocess
 
-import config.type as type
+import DeepFake.config.type as type
 import DeepFake.utils.log as log
 import DeepFake.utils.filesystem as filesystem
 

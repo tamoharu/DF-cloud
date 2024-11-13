@@ -3,7 +3,7 @@ import shutil
 import argparse
 
 import GCP.cloud_storage as cs
-import DeepFake.mask as mask
+import DeepFake.core.mask as mask
 import DeepFake.utils.filesystem as filesystem
 
 

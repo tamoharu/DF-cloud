@@ -6,7 +6,7 @@ from logging import INFO
 import psutil
 from tqdm import tqdm
 
-import config.type as type
+import DeepFake.config.type as type
 
 
 def run(process_frames : type.ProcessFrames, frame_paths: List[str], output_path: str) -> None:
@@ -59,7 +59,7 @@ def get_system_resources() -> type.SystemResources:
     cpu_usage = psutil.cpu_percent(interval=1)
     memory_usage = memory.percent
     try:
-        io_usage = disk.read_bytes + disk.write_bytes / disk.read_time + disk.write_time
+        io_usage = disk.read_bytes + disk.write_bytes / disk.read_time + disk.write_time # type: ignore
     except:
         io_usage = 0.0
     return {

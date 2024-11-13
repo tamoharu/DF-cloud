@@ -1,6 +1,6 @@
 import numpy as np
 
-import config.type as type
+import DeepFake.config.type as type
 import DeepFake.utils.filesystem as filesystem
 import DeepFake.utils.inference as inference
 from DeepFake.utils.swap_util import warp_face
@@ -24,7 +24,7 @@ MODEL_TEMPLATE = np.array(
     [ 0.38710391, 0.72160547 ],
     [ 0.61507734, 0.72034453 ]
 ])
-MODEL_PATH = filesystem.resolve_relative_path('../../face_recognizer.onnx')
+MODEL_PATH = filesystem.resolve_relative_path('../../models/face_recognizer.onnx')
     
 
 def run(frame: type.Frame, kps: type.Kps) -> type.Embedding:

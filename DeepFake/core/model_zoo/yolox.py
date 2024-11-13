@@ -7,7 +7,7 @@ from typing import List, Tuple
 import cv2
 import numpy as np
 
-import config.type as type
+import DeepFake.config.type as type
 import DeepFake.utils.filesystem as filesystem
 import DeepFake.utils.inference as inference
 import DeepFake.utils.box2point as box2point

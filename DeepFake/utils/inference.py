@@ -5,7 +5,7 @@ from typing import List
 
 import onnxruntime
 
-import config.words as words
+import DeepFake.config.words as words
 import DeepFake.utils.log as log
 
 

@@ -2,8 +2,8 @@ from typing import Optional, List, Tuple
 from functools import lru_cache
 import cv2
 
-from config.type import Frame, Resolution
-from config.choices import video_template_sizes
+from DeepFake.config.type import Frame, Resolution
+from DeepFake.config.choices import video_template_sizes
 from DeepFake.utils.filesystem import is_image, is_video
 
 

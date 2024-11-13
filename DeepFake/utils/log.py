@@ -1,8 +1,8 @@
 from typing import Dict
 from logging import basicConfig, getLogger, Logger, DEBUG, INFO, WARNING, ERROR
 
-import config.globals as globals
-import config.type as type
+import DeepFake.config.globals as globals
+import DeepFake.config.type as type
 
 
 def init(log_level : type.LogLevel) -> None:
