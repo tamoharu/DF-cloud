@@ -25,7 +25,6 @@ def process_frames(source_frames: List[type.Frame], source_embedding_path: str, 
         swapped_frame = swap(source_embedding, target_frame, target_crop_frame, target_matrix, target_mask)
 
 
-def swap(source_embedding: type.Embedding, target_frame: type.Frame, target_crop_frame: type.Frame, target_matrix: type.Matrix, target_mask: type.Mask) -> type.Frame:
     swapped_crop_frame = swapper.run(target_crop_frame, source_embedding)
     temp_frame_size = target_frame.shape[:2][::-1]
     inverse_crop_frame = cv2.warpAffine(swapped_crop_frame, target_matrix, temp_frame_size, borderMode = cv2.BORDER_REPLICATE)

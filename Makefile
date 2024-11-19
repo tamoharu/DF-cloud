@@ -1,5 +1,6 @@
 # Basic configuration
-PROJECT_NAME := inference-app
+PROJECT_ID := df-cloud
+PROJECT_NAME := inference
 CONFIG_DIR := config
 SETUP_DIR := setup
 DOCKER_USERNAME := $(shell whoami)
@@ -93,9 +94,6 @@ run-video: validate-video-path validate-gcp-auth
 	@echo "$(BLUE)Processing video: $(VIDEO_PATH)$(NC)"
 	@docker run $(GPU_FLAGS) \
 		--rm \
-		--env-file $(CONFIG_DIR)/.env \
-		--env PROJECT_ID=$(PROJECT_ID) \
-		--env BUCKET_NAME=$(BUCKET_NAME) \
 		--env INFERENCE_ARGS="--video_path $(VIDEO_PATH)"\
 		--env GOOGLE_APPLICATION_CREDENTIALS=/gcp/credentials.json \
 		-v $(GOOGLE_APPLICATION_CREDENTIALS):/gcp/credentials.json:ro \

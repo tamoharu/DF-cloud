@@ -5,11 +5,9 @@ import logging
 
 from google.cloud import storage
 
-import config.env as env
 
-
-PROJECT_ID = env.PROJECT_ID
-BUCKET_NAME = env.BUCKET_NAME
+PROJECT_ID = 'df-cloud'
+BUCKET_NAME = 'df-cloud'
 storage_client = storage.Client(project=PROJECT_ID)
 bucket = storage_client.bucket(BUCKET_NAME)
 max_workers = 4
