@@ -3,7 +3,6 @@ import numpy as np
 import DeepFake.config.type as type
 import DeepFake.utils.filesystem as filesystem
 import DeepFake.utils.inference as inference
-from DeepFake.utils.swap_util import warp_face
 
 
 '''
@@ -27,15 +26,14 @@ MODEL_TEMPLATE = np.array(
 MODEL_PATH = filesystem.resolve_relative_path('../../models/face_recognizer.onnx')
     
 
-def run(frame: type.Frame, kps: type.Kps) -> type.Embedding:
-    crop_frame = _preprocess(frame, kps)
+def run(frame: type.Frame) -> type.Embedding:
+    crop_frame = _preprocess(frame)
     output = _forward(crop_frame)
     embedding = _postprocess(output)
     return embedding
 
 
-def _preprocess(frame: type.Frame, kps: type.Kps) -> type.Frame:
-    crop_frame, _ = warp_face(frame, kps, MODEL_TEMPLATE, MODEL_SIZE)
+def _preprocess(crop_frame: type.Frame) -> type.Frame:
     crop_frame = crop_frame.astype(np.float32) / 127.5 - 1
     crop_frame = crop_frame[:, :, ::-1].transpose(2, 0, 1)
     crop_frame = np.expand_dims(crop_frame, axis = 0)

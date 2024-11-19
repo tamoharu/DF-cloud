@@ -5,6 +5,17 @@ import urllib.request
 import zipfile
 
 
+URL = 'https://github.com/tamoharu/DF-cloud/releases/download/model/model.zip'
+EXTRACT_TO = './DeepFake/models/'
+
+MODELS = [
+    'arcface_w600k_r50.onnx',
+    'face_occluder.onnx',
+    'inswapper_128.onnx',
+    'yolox.onnx',
+]
+
+
 def install_requirements():
     print("Installing packages from requirements.txt...")
     pip_command = [sys.executable, "-m", "pip"]
@@ -24,6 +35,10 @@ def download_and_extract(url, extract_to):
     filename = url.split("/")[-1]
     file_path = os.path.join(extract_to, filename)
 
+    if MODELS and all(os.path.exists(os.path.join(extract_to, model)) for model in MODELS):
+        print("Models already downloaded")
+        return
+    
     print(f"Downloading {filename} to {extract_to}...")
     urllib.request.urlretrieve(url, file_path)
     print(f"{filename} downloaded")
@@ -38,9 +53,7 @@ def download_and_extract(url, extract_to):
 
 
 def download_datasets():
-    extract_to = './DeepFake/models/'
-    url = 'https://github.com/tamoharu/DF-cloud/releases/download/model/model.zip'
-    download_and_extract(url, extract_to)
+    download_and_extract(URL, EXTRACT_TO)
 
 
 def main():

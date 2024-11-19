@@ -11,6 +11,7 @@ import DeepFake.utils.ffmpeg as ffmpeg
 import DeepFake.utils.vision as vision
 import DeepFake.utils.multi_process as multi_process
 import DeepFake.core.model_zoo.face_occluder as masker
+import DeepFake.core.model_zoo.inswapper as swapper
 
 
 def run(video_path: str, output_path: str):
@@ -46,7 +47,7 @@ def process_frames(frame_paths: List[str], output_path: str, update_progress: ty
 
 
 def mask_target(target_frame: type.Frame) -> Tuple[List[type.Mask], List[type.Frame], List[type.Matrix]]:
-    cropped_frames, affine_matrices = swap_util.crop_frame(target_frame)
+    cropped_frames, affine_matrices = swap_util.crop_frame(target_frame, swapper.MODEL_SIZE, swapper.MODEL_TEMPLATE)
     if len(cropped_frames) == 0:
         return [], [], []
     mask_list = []

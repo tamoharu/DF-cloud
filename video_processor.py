@@ -13,6 +13,7 @@ def parse_arguments():
     args = parser.parse_args()
     return args
 
+
 def run():
     args = parse_arguments()
     cloud_video_path = args.video_path
@@ -27,7 +28,7 @@ def run():
         mask.run(local_video_path, local_output_dir)
         cs.upload_directory(local_output_dir, cloud_video_dir)
     except:
-        shutil.rmtree(local_video_dir)
+        raise
     shutil.rmtree(local_video_dir)
 
 

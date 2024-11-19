@@ -7,11 +7,7 @@
 **/pyvenv.cfg
 **/local_cache/
 **/*.DS_Store
-**/*.onnx
-**/*.pth
-**/*.pt
 **/*.png
 **/*.jpg
 **/*.zip
-**/*.env
 **/tests/
