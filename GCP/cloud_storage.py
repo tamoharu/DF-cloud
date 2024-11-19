@@ -6,8 +6,8 @@ import logging
 from google.cloud import storage
 
 
-PROJECT_ID = 'df-cloud'
-BUCKET_NAME = 'df-cloud'
+PROJECT_ID = 'df-backend'
+BUCKET_NAME = 'df-backend'
 storage_client = storage.Client(project=PROJECT_ID)
 bucket = storage_client.bucket(BUCKET_NAME)
 max_workers = 4

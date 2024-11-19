@@ -1,5 +1,5 @@
 # Basic configuration
-PROJECT_ID := df-cloud
+PROJECT_ID := df-backend
 PROJECT_NAME := inference
 CONFIG_DIR := config
 SETUP_DIR := setup
@@ -7,12 +7,6 @@ DOCKER_USERNAME := $(shell whoami)
 
 # Default GCP credentials path
 GOOGLE_APPLICATION_CREDENTIALS ?= ${HOME}/.config/gcloud/application_default_credentials.json
-
-# Load environment variables
-ifneq (,$(wildcard $(CONFIG_DIR)/.env))
-    include $(CONFIG_DIR)/.env
-    export
-endif
 
 # Docker configuration
 DOCKER_IMAGE := gcr.io/$(PROJECT_ID)/$(PROJECT_NAME)

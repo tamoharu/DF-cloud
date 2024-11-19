@@ -5,7 +5,6 @@ onnxruntime==1.16.3
 opencv_python==4.8.1.78
 protobuf==5.28.3
 psutil==5.9.6
-python-dotenv==1.0.1
 tqdm==4.66.1
 torch==2.1.2
 google-cloud-storage==2.14.0
