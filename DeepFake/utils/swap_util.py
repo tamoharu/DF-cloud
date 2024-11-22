@@ -7,7 +7,7 @@ import DeepFake.config.type as type
 import DeepFake.core.model_zoo.yolox as detector
 
 
-def crop_frame(frame: type.Frame, model_size, model_template) -> Tuple[List[type.Frame], List[type.Matrix]]:
+def crop_frame(frame: type.Frame, model_size: type.Size, model_template: type.Template) -> Tuple[List[type.Frame], List[type.Matrix]]:
     normed_template = model_template * model_size
     kps_list = detector.run(frame)
     if len(kps_list) == 0:

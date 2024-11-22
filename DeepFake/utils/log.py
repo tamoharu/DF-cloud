@@ -5,7 +5,7 @@ import DeepFake.config.globals as globals
 import DeepFake.config.type as type
 
 
-def init(log_level : type.LogLevel) -> None:
+def init(log_level: type.LogLevel) -> None:
 	basicConfig(format = None) #type: ignore
 	get_package_logger().setLevel(get_log_levels()[log_level])
 
@@ -14,19 +14,19 @@ def get_package_logger() -> Logger:
 	return getLogger(globals.PJ_NAME)
 
 
-def debug(message : str, scope : str) -> None:
+def debug(message: str, scope: str) -> None:
 	get_package_logger().debug('[' + scope + '] ' + message)
 
 
-def info(message : str, scope : str) -> None:
+def info(message: str, scope: str) -> None:
 	get_package_logger().info('[' + scope + '] ' + message)
 
 
-def warn(message : str, scope : str) -> None:
+def warn(message: str, scope: str) -> None:
 	get_package_logger().warning('[' + scope + '] ' + message)
 
 
-def error(message : str, scope : str) -> None:
+def error(message: str, scope: str) -> None:
 	get_package_logger().error('[' + scope + '] ' + message)
 
 

@@ -6,9 +6,9 @@ WORKDIR /app
 ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1
 RUN apt-get update && apt-get install -y \
-    python3.10 \
+    python3.11 \
     python3-pip \
-    python3.10-dev \
+    python3.11-dev \
     ffmpeg \
     build-essential \
     make \ 

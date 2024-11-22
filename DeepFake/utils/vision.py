@@ -7,7 +7,7 @@ from DeepFake.config.choices import video_template_sizes
 from DeepFake.utils.filesystem import is_image, is_video
 
 
-def get_video_frame(video_path : str, frame_number : int = 0) -> Optional[Frame]:
+def get_video_frame(video_path: str, frame_number: int = 0) -> Optional[Frame]:
 	if is_video(video_path):
 		video_capture = cv2.VideoCapture(video_path)
 		if video_capture.isOpened():
@@ -20,7 +20,7 @@ def get_video_frame(video_path : str, frame_number : int = 0) -> Optional[Frame]
 	return None
 
 
-def count_video_frame_total(video_path : str) -> int:
+def count_video_frame_total(video_path: str) -> int:
 	if is_video(video_path):
 		video_capture = cv2.VideoCapture(video_path)
 		if video_capture.isOpened():
@@ -30,7 +30,7 @@ def count_video_frame_total(video_path : str) -> int:
 	return 0
 
 
-def detect_video_fps(video_path : str) -> float:
+def detect_video_fps(video_path: str) -> float:
 	video_capture = cv2.VideoCapture(video_path)
 	if video_capture.isOpened():
 		video_fps = video_capture.get(cv2.CAP_PROP_FPS)
@@ -39,7 +39,7 @@ def detect_video_fps(video_path : str) -> float:
 	return 0
 
 
-def detect_video_resolution(video_path : str) -> Tuple[float, float]:
+def detect_video_resolution(video_path: str) -> Tuple[float, float]:
 	video_capture = cv2.VideoCapture(video_path)
 	if video_capture.isOpened():
 		width = video_capture.get(cv2.CAP_PROP_FRAME_WIDTH)
@@ -50,7 +50,7 @@ def detect_video_resolution(video_path : str) -> Tuple[float, float]:
 		return 0, 0
 
 
-def create_video_resolutions(video_path : str) -> Optional[List[str]]:
+def create_video_resolutions(video_path: str) -> Optional[List[str]]:
 	temp_resolutions = []
 	video_resolutions = []
 	video_resolution = detect_video_resolution(video_path)
@@ -70,7 +70,7 @@ def create_video_resolutions(video_path : str) -> Optional[List[str]]:
 	return None
 
 
-def normalize_resolution(resolution : Tuple[float, float]) -> Resolution:
+def normalize_resolution(resolution: Tuple[float, float]) -> Resolution:
 	width, height = resolution
 
 	if width and height:
@@ -80,17 +80,17 @@ def normalize_resolution(resolution : Tuple[float, float]) -> Resolution:
 	return 0, 0
 
 
-def pack_resolution(resolution : Tuple[float, float]) -> str:
+def pack_resolution(resolution: Tuple[float, float]) -> str:
 	width, height = normalize_resolution(resolution)
 	return str(width) + 'x' + str(height)
 
 
-def unpack_resolution(resolution : str) -> Resolution:
+def unpack_resolution(resolution: str) -> Resolution:
 	width, height = map(int, resolution.split('x'))
 	return width, height
 
 
-def resize_frame_resolution(frame : Frame, max_width : int, max_height : int) -> Frame:
+def resize_frame_resolution(frame: Frame, max_width: int, max_height: int) -> Frame:
 	height, width = frame.shape[:2]
 
 	if height > max_height or width > max_width:
@@ -101,16 +101,16 @@ def resize_frame_resolution(frame : Frame, max_width : int, max_height : int) ->
 	return frame
 
 
-def normalize_frame_color(frame : Frame) -> Frame:
+def normalize_frame_color(frame: Frame) -> Frame:
 	return cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
 
 @lru_cache(maxsize = 128)
-def read_static_image(image_path : str) -> Frame:
+def read_static_image(image_path: str) -> Frame:
 	return read_image(image_path)
 
 
-def read_static_images(image_paths : List[str]) -> Optional[List[Frame]]:
+def read_static_images(image_paths: List[str]) -> List[Frame]:
 	frames = []
 	if image_paths:
 		for image_path in image_paths:
@@ -118,13 +118,13 @@ def read_static_images(image_paths : List[str]) -> Optional[List[Frame]]:
 	return frames
 
 
-def read_image(image_path : str) -> Frame:
+def read_image(image_path: str) -> Frame:
 	if is_image(image_path):
 		return cv2.imread(image_path)
 	raise
 
 
-def write_image(image_path : str, frame : Frame) -> bool:
+def write_image(image_path: str, frame: Frame) -> bool:
 	if image_path:
 		return cv2.imwrite(image_path, frame)
 	return False

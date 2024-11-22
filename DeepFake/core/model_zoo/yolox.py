@@ -38,10 +38,10 @@ def _preprocess(frame: type.Frame) -> Tuple[type.Frame, type.ResizeData]:
     resize_ratio = min(MODEL_SIZE[0] / frame_height, MODEL_SIZE[1] / frame_width)
     resized_shape = int(round(frame_width * resize_ratio)), int(round(frame_height * resize_ratio))
     frame = cv2.resize(frame, resized_shape, interpolation=cv2.INTER_LINEAR)
-    offset_height = round((MODEL_SIZE[0] - resized_shape[1]) / 2 - 0.1)
-    offset_width = round((MODEL_SIZE[1] - resized_shape[0]) / 2 - 0.1)
+    offset_height = (MODEL_SIZE[0] - resized_shape[1]) / 2
+    offset_width = (MODEL_SIZE[1] - resized_shape[0]) / 2
     resize_data = [offset_height, offset_width, resize_ratio]
-    frame = cv2.copyMakeBorder(frame, offset_height, offset_height, offset_width, offset_width, cv2.BORDER_CONSTANT, value = (114, 114, 114))
+    frame = cv2.copyMakeBorder(frame, round(offset_height - 0.1), round(offset_height + 0.1), round(offset_width - 0.1), round(offset_width + 0.1), cv2.BORDER_CONSTANT, value = (114, 114, 114))
     frame = frame.transpose(2, 0, 1)
     frame = frame.astype(np.float32)
     frame = np.expand_dims(frame, axis = 0)

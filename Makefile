@@ -36,21 +36,18 @@ NC := \033[0m
 # Help message
 .PHONY: help
 help:
-	@echo "$(BLUE)Video Processing Commands:$(NC)"
-	@echo "  make run-video VIDEO_PATH=path/to/video  - Process a single video"
+	@echo "$(BLUE)Usage: make [target]$(NC)"
 	@echo ""
-	@echo "$(BLUE)Docker Management:$(NC)"
-	@echo "  make build                               - Build Docker image"
-	@echo "  make push                                - Push image to GCR"
-	@echo "  make pull                                - Pull image from GCR"
-	@echo "  make clean                               - Clean up Docker resources"
-	@echo "  make clean-all                           - Clean up all resources including outputs"
-	@echo ""
-	@echo "$(BLUE)Optional Parameters:$(NC)"
-	@echo ""
-	@echo "$(BLUE)Examples:$(NC)"
-	@echo "  make run-video VIDEO_PATH=videos/test.mp4"
-	@echo "  make run-video VIDEO_PATH=videos/test.mp4"
+	@echo "$(BLUE)Available targets:$(NC)"
+	@echo "  $(BLUE)build$(NC)            Build Docker image"
+	@echo "  $(BLUE)build-dev$(NC)        Build development environment"
+	@echo "  $(BLUE)run-video$(NC)        Process video"
+	@echo "  $(BLUE)setup-gcp-auth$(NC)   Setup GCP authentication"
+	@echo "  $(BLUE)push$(NC)             Push image to GCR"
+	@echo "  $(BLUE)pull$(NC)             Pull image from GCR"
+	@echo "  $(BLUE)status$(NC)           Show current configuration"
+	@echo "  $(BLUE)clean$(NC)            Clean up Docker resources"
+
 
 # Build Docker image
 .PHONY: build
@@ -63,6 +60,12 @@ build:
 		-t $(DOCKER_IMAGE):$(DOCKER_TAG) \
 		-f $(SETUP_DIR)/Dockerfile \
 		.
+
+# Build development environment
+.PHONY: build-dev
+build-dev:
+	@echo "$(BLUE)Building development environment...$(NC)"
+	python setup/build-dev.py
 
 # Validate video path
 .PHONY: validate-video-path

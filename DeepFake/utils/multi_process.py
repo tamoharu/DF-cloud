@@ -9,30 +9,30 @@ from tqdm import tqdm
 import DeepFake.config.type as type
 
 
-def run(process_frames : type.ProcessFrames, frame_paths: List[str], output_path: str) -> None:
+def run(process_frames: type.ProcessFrames, frame_paths: List[str], *args: str) -> None:
     thread, queue = calculate_optimal_params(len(frame_paths))
     with tqdm(total = len(frame_paths), desc = 'processing', unit = 'frame', ascii = ' =', disable = INFO in [ 'warn', 'error' ]) as progress:
         progress.set_postfix(get_progress_info(thread, queue))
         with ThreadPoolExecutor(max_workers = thread) as executor:
             futures = []
-            queue_frame_paths : Queue[str] = create_queue(frame_paths)
+            queue_frame_paths: Queue[str] = create_queue(frame_paths)
             queue_per_future = int(max(len(frame_paths) // thread * queue, 1))
             while not queue_frame_paths.empty():
                 submit_frame_paths = pick_queue(queue_frame_paths, queue_per_future)
-                future = executor.submit(process_frames, submit_frame_paths, output_path, progress.update)
+                future = executor.submit(process_frames, progress.update, submit_frame_paths, *args)
                 futures.append(future)
             for future_done in as_completed(futures):
                 future_done.result()
 
 
-def create_queue(temp_frame_paths : List[str]) -> Queue[str]:
-	queue : Queue[str] = Queue()
+def create_queue(temp_frame_paths: List[str]) -> Queue[str]:
+	queue: Queue[str] = Queue()
 	for frame_path in temp_frame_paths:
 		queue.put(frame_path)
 	return queue
 
 
-def pick_queue(queue : Queue[str], queue_per_future : int) -> List[str]:
+def pick_queue(queue: Queue[str], queue_per_future: int) -> List[str]:
 	queues = []
 	for _ in range(queue_per_future):
 		if not queue.empty():

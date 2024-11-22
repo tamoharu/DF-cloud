@@ -16,7 +16,7 @@ output: [1, 3, 128, 128]
 '''
 
 
-MODEL_PATH = filesystem.resolve_relative_path('../../models/inswapper.onnx')
+MODEL_PATH = filesystem.resolve_relative_path('../../models/inswapper_128.onnx')
 MODEL_SIZE = (128, 128)
 MODEL_TEMPLATE = np.array(
 [

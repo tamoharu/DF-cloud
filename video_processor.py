@@ -1,6 +1,7 @@
 import os
 import shutil
 import argparse
+import asyncio
 
 import GCP.cloud_storage as cs
 import DeepFake.core.mask as mask
@@ -14,7 +15,7 @@ def parse_arguments():
     return args
 
 
-def run():
+async def run():
     args = parse_arguments()
     cloud_video_path = args.video_path
     video_name = cloud_video_path.split('/')[-1]
@@ -24,13 +25,13 @@ def run():
     local_output_dir = local_video_dir + '/' + 'output'
     cloud_video_dir = '/'.join(cloud_video_path.split('/')[:-1])
     try:
-        cs.download_file(cloud_video_path, local_video_path)
+        await cs.download_file(cloud_video_path, local_video_path)
         mask.run(local_video_path, local_output_dir)
-        cs.upload_directory(local_output_dir, cloud_video_dir)
+        await cs.upload_directory(local_output_dir, cloud_video_dir)
     except:
         raise
     shutil.rmtree(local_video_dir)
 
 
 if __name__ == '__main__':
-    run()
+    asyncio.run(run())

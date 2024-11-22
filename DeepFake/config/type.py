@@ -1,4 +1,4 @@
-from typing import TypedDict, Annotated, Any, Literal, Tuple, Callable, Union, List
+from typing import List, Any, Tuple, TypedDict, Annotated,  Literal,  Callable, TypeVar
 
 import numpy as np
 from numpy.typing import NDArray
@@ -18,9 +18,12 @@ Angle = float
 ResizeData = List[int | float]
 Template = np.ndarray[Any, Any]
 Size = Tuple[int, int]
+
+Args = tuple[TypeVar('T'), ...]
 UpdateProcess = Callable[[], Any]
-ProcessFrames = Callable[[List[str], str, UpdateProcess], None]
+ProcessFrames = Callable[[UpdateProcess, List[str], *tuple[str, ...]], None]
 Resolution = Tuple[int, int]
+
 Process = Literal['swap', 'blur']
 DetectFaceModel = Literal['yolov8', 'yolox']
 MaskFaceModel = Literal['face_occluder', 'face_parser', 'box']

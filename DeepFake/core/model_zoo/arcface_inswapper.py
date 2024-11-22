@@ -23,7 +23,7 @@ MODEL_TEMPLATE = np.array(
     [ 0.38710391, 0.72160547 ],
     [ 0.61507734, 0.72034453 ]
 ])
-MODEL_PATH = filesystem.resolve_relative_path('../../models/face_recognizer.onnx')
+MODEL_PATH = filesystem.resolve_relative_path('../../models/arcface_w600k_r50.onnx')
     
 
 def run(frame: type.Frame) -> type.Embedding:
