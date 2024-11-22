@@ -10,10 +10,21 @@ import setup.config.globals as globals
 
 
 def main() -> None:
+    verify_python_version()
     install_requirements()
     download_datasets()
     print("Setup completed")
     
+
+def verify_python_version() -> None:
+    required_major_minor = (3, 11)
+    current_version = sys.version_info[:2]
+    if current_version != required_major_minor:
+        print(f"Error: Python {'.'.join(map(str, required_major_minor))} is required")
+        print(f"Current version: {sys.version}")
+        sys.exit(1)
+    print(f"Python version verified: {sys.version}")
+
 
 def install_requirements() -> None:
     print("Installing packages from requirements.txt...")
