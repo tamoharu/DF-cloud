@@ -24,6 +24,7 @@ UpdateProcess = Callable[[], Any]
 ProcessFrames = Callable[[UpdateProcess, List[str], *tuple[str, ...]], None]
 Resolution = Tuple[int, int]
 
+ModelType = Literal['detector', 'masker', 'embedder', 'swapper', 'enhancer']
 Process = Literal['swap', 'blur']
 DetectFaceModel = Literal['yolov8', 'yolox']
 MaskFaceModel = Literal['face_occluder', 'face_parser', 'box']

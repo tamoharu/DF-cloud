@@ -14,6 +14,7 @@ output
 '''
 
 
+MODEL_PATH = filesystem.resolve_relative_path('../../models/arcface_w600k_r50.onnx')
 MODEL_SIZE = (112, 112)
 MODEL_TEMPLATE = np.array(
 [
@@ -23,8 +24,7 @@ MODEL_TEMPLATE = np.array(
     [ 0.38710391, 0.72160547 ],
     [ 0.61507734, 0.72034453 ]
 ])
-MODEL_PATH = filesystem.resolve_relative_path('../../models/arcface_w600k_r50.onnx')
-    
+
 
 def run(frame: type.Frame) -> type.Embedding:
     crop_frame = _preprocess(frame)
@@ -41,7 +41,7 @@ def _preprocess(crop_frame: type.Frame) -> type.Frame:
 
 
 def _forward(frame: type.Frame) -> type.Output:
-    session = inference.get_session(MODEL_PATH)
+    session = inference.get_session(MODEL_PATH, 'embedder')
     input_names = inference.get_input_names(session)
     with inference.thread_semaphore():
         output = session.run(None,

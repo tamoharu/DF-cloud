@@ -2,12 +2,13 @@
 # output: kps[5, 2]
 # kps: [left_eye, right_eye, nose, left_mouth, right_mouth]
 
-from typing import List, Tuple
+from typing import Tuple
 
 import cv2
 import numpy as np
 
 import DeepFake.config.type as type
+import DeepFake.config.instance as instance
 import DeepFake.utils.filesystem as filesystem
 import DeepFake.utils.inference as inference
 import DeepFake.utils.box2point as box2point
@@ -50,7 +51,7 @@ def _preprocess(frame: type.Frame) -> Tuple[type.Frame, type.ResizeData]:
 
 
 def _forward(frame: type.Frame) -> type.Output:
-    session = inference.get_session(MODEL_PATH)
+    session = inference.get_session(MODEL_PATH, 'detector')
     input_names = inference.get_input_names(session)
     with inference.thread_semaphore():
         output = session.run(None,

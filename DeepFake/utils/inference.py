@@ -5,6 +5,9 @@ from typing import List
 
 import onnxruntime
 
+import DeepFake.config.instance as instance
+import DeepFake.config.device as device
+import DeepFake.config.type as type
 import DeepFake.config.words as words
 import DeepFake.utils.log as log
 
@@ -49,28 +52,44 @@ def _has_amd_gpu() -> bool:
 
 
 def get_execution_providers() -> List[str]:
-    available_providers = onnxruntime.get_available_providers()
-    providers = []
-    if 'CUDAExecutionProvider' in available_providers and _has_nvidia_gpu():
-        providers.append('CUDAExecutionProvider')
-    if 'DMLExecutionProvider' in available_providers and (_has_nvidia_gpu() or _has_amd_gpu()):
-        providers.append('DMLExecutionProvider')
-    if 'CoreMLExecutionProvider' in available_providers and platform.system().lower() == 'darwin':
-        providers.append('CoreMLExecutionProvider')
-    if 'ROCMExecutionProvider' in available_providers and _has_amd_gpu():
-        providers.append('ROCMExecutionProvider')
-    providers.append('CPUExecutionProvider')
-    return providers
+    _providers = device.execution_providers
+    if _providers:
+        return _providers
+    with thread_lock():
+        _providers = device.execution_providers
+        if _providers:
+            return _providers
+        available_providers = onnxruntime.get_available_providers()
+        providers = []
+        if 'CUDAExecutionProvider' in available_providers and _has_nvidia_gpu():
+            providers.append('CUDAExecutionProvider')
+        if 'DMLExecutionProvider' in available_providers and (_has_nvidia_gpu() or _has_amd_gpu()):
+            providers.append('DMLExecutionProvider')
+        if 'CoreMLExecutionProvider' in available_providers and platform.system().lower() == 'darwin':
+            providers.append('CoreMLExecutionProvider')
+        if 'ROCMExecutionProvider' in available_providers and _has_amd_gpu():
+            providers.append('ROCMExecutionProvider')
+        providers.append('CPUExecutionProvider')
+        device.execution_providers = providers
+        return providers
 
 
-def get_session(model_path: str) -> onnxruntime.InferenceSession:
-    execution_providers = get_execution_providers()
-    try:
-        return onnxruntime.InferenceSession(str(model_path), providers=execution_providers)
-    except:
-        log.error(words.get('inference/get_session'), __name__.upper())
-        return onnxruntime.InferenceSession(str(model_path), providers=['CPUExecutionProvider'])
-
+def get_session(model_path: str, model_type: type.ModelType) -> onnxruntime.InferenceSession:
+    session = instance.get_instance(model_type)
+    if session:
+        return session
+    with instance._locks[model_type]:
+        session = instance.get_instance(model_type)
+        if session:
+            return session
+        execution_providers = get_execution_providers()
+        try:
+            session = onnxruntime.InferenceSession(str(model_path), providers=execution_providers)
+        except:
+            log.error(words.get('inference/get_session'), __name__.upper())
+            session = onnxruntime.InferenceSession(str(model_path), providers=['CPUExecutionProvider'])
+        instance.set_instance(model_type, session)
+        return session
 
 def get_input_names(session: onnxruntime.InferenceSession) -> List[str]:
     return [input.name for input in session.get_inputs()]

@@ -58,6 +58,7 @@ build:
 .PHONY: build-dev
 build-dev:
 	@echo "$(BLUE)Building development environment...$(NC)"
+	apt install python3-venv
 	python setup/build-dev.py
 
 

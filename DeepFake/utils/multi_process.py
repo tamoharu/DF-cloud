@@ -11,6 +11,7 @@ import DeepFake.config.type as type
 
 def run(process_frames: type.ProcessFrames, frame_paths: List[str], *args: str) -> None:
     thread, queue = calculate_optimal_params(len(frame_paths))
+    thread = 32
     with tqdm(total = len(frame_paths), desc = 'processing', unit = 'frame', ascii = ' =', disable = INFO in [ 'warn', 'error' ]) as progress:
         progress.set_postfix(get_progress_info(thread, queue))
         with ThreadPoolExecutor(max_workers = thread) as executor:

@@ -33,7 +33,7 @@ def _preprocess(frame: type.Frame) -> type.Frame:
 
 
 def _forward(frame: type.Frame) -> type.Output:
-    session = inference.get_session(MODEL_PATH)
+    session = inference.get_session(MODEL_PATH, 'masker')
     input_names = inference.get_input_names(session)
     with inference.thread_semaphore():
         output = session.run(None,

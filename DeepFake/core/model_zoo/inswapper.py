@@ -37,7 +37,7 @@ def run(target_crop_frame: type.Frame, source_embedding: type.Embedding) -> type
 
 
 def _forward(target_frame: type.Frame, source_embedding: type.Embedding) -> type.Output:
-    session = inference.get_session(MODEL_PATH)
+    session = inference.get_session(MODEL_PATH, 'swapper')
     input_names = inference.get_input_names(session)
     with inference.thread_semaphore():
         output = session.run(None,
