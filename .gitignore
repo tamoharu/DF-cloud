@@ -16,3 +16,7 @@
 **/*.env
 **/tests/
 **/temp/
+**/*.deb
+**/*.deb.1
+**/*.run
+**/*.save

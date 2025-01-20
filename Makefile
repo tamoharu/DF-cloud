@@ -58,8 +58,8 @@ build:
 .PHONY: build-dev
 build-dev:
 	@echo "$(BLUE)Building development environment...$(NC)"
-	apt install python3-venv
-	python setup/build-dev.py
+	sudo apt install python3-venv
+	python3 setup/build-dev.py
 
 
 .PHONY: validate-gcp-auth
@@ -108,6 +108,7 @@ run-video: validate-video-args validate-gcp-auth
 		-v $(shell pwd)/$(VIDEO_PATH):/app/$(VIDEO_PATH) \
 		$(DOCKER_IMAGE):$(DOCKER_TAG)
 	@echo "$(GREEN)Video processing completed.$(NC)"
+
 
 .PHONY: run-swap
 run-swap: validate-swap-args validate-gcp-auth
